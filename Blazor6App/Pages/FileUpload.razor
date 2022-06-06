@@ -1,0 +1,69 @@
+﻿@page "/FileUpload"
+@using Blazor6App.Services;
+@inject IFileUploadService fileService;
+
+<div class="col-6">
+	<h3>Blazor File Upload</h3>
+	<div class="form-group">
+		<InputFile OnChange="OnInputFileChange" multiple />
+		<button class="btn btn-success btn-sm" type="button" 
+			@onclick="UploadFiles">Upload</button>
+		<br/>
+		@{
+			var progressCss = "progress" + (displayProgress ? "" : "d-none");
+			var progressWidthStyle = progressPercent + "%";
+		}
+		<br/>
+		<div class="@progressCss m-2">
+			<div class="progress-bar" role="progressbar" 
+				style="width:@progressWidthStyle" aria-valuenow="@progressPercent"
+				aria-valuemin="0" area-valuemax="100">
+
+			</div>
+		</div>
+	</div>
+	<br/>
+	<label>@labelText</label>
+</div>
+
+@code {
+
+	private bool displayProgress = false;
+	private int progressPercent = 0;
+
+	private IReadOnlyList<IBrowserFile> selectedFiles;
+
+	private string labelText = string.Empty;
+
+	private void OnInputFileChange(InputFileChangeEventArgs e)
+	{
+		selectedFiles = new List<IBrowserFile>();
+		selectedFiles = e.GetMultipleFiles();
+	}
+
+	private async Task UploadFiles()
+	{
+		try
+		{
+			if(selectedFiles is not null && selectedFiles.Count > 0)
+			{
+				var uploaded = 0;
+				displayProgress = true;
+
+				foreach(var file in selectedFiles)
+				{
+					await fileService.UploadFile(file);
+					uploaded++;
+					progressPercent = uploaded * 100 / selectedFiles.Count;
+				}
+
+				labelText = $"Uploaded {selectedFiles.Count} files!";
+				//displayProgress = false;
+			}
+		}
+		catch(Exception e)
+		{
+			labelText = $"Upload Failed {e.Message}";
+		}
+	}
+}

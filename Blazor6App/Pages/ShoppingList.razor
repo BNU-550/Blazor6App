@@ -1,0 +1,69 @@
+﻿@page "/shoppinglist"
+@using Blazor6App.Models;
+
+<PageTitle>Shopping List</PageTitle>
+<h3>Dereks Shopping List</h3>
+
+@*Input New Item Using Standard HTML*@
+
+<input placeholder="Item Name" @bind="item.Name" />
+<input placeholder="Item Quantity" @bind="item.Quantity" />
+<input placeholder="Item Price" @bind="item.Price" />
+
+<button @onclick="AddItem">Add Item</button>
+<br/><br/>
+
+<div class="col-4">
+	<table class="table table-bordered">
+		<tr>
+			<th>Name</th>
+			<th class="text-center">Quantity</th>
+			<th class="text-center">Price</th>
+			<th>Action</th>
+		</tr>
+		@foreach(ShoppingItem listItem in shopping)
+		{
+			<Item ShoppingItem="@listItem" OnQuantityChanged="OnQuantityChanged"></Item>	
+		}
+
+	</table>
+</div>
+<br/>
+
+<h3>Total Cost: @totalCost.ToString("c")</h3>
+
+@code 
+{
+	private ShoppingItem item = new();
+
+	private decimal totalCost;
+
+	private List<ShoppingItem> shopping = new()
+	{
+		new ShoppingItem(){Id = 1, Name = "Tomatoes", Quantity = 1, Price = 1.50m}
+	};
+
+	private void AddItem()
+	{
+		if(!string.IsNullOrWhiteSpace(item.Name) &&
+					item.Quantity >= 1 && item.Price > 0)
+		{
+			shopping.Add(item);
+			CalculateTotal();
+
+			item = new();
+		}
+	}
+
+
+	private void CalculateTotal()
+	{
+		totalCost = @shopping.Sum(item => item.Price * item.Quantity);		
+	}
+
+	public void OnQuantityChanged()
+	{
+		CalculateTotal();
+	}
+
+}

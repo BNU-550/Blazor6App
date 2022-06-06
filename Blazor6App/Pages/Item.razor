@@ -1,0 +1,36 @@
+﻿<tr>
+	<td>@ShoppingItem.Name</td>
+	<td class="text-center">@ShoppingItem.Quantity</td>
+	<td class="text-center">@ShoppingItem.Price.ToString("c")</td>
+	<td>
+		<button class="btn btn-warning text-center" 
+			@onclick="IncreaseItem"
+			style="background-color:lightblue">Increase
+		</button>
+		<button class="btn btn-success text-center" 
+			@onclick="DecreaseItem"
+			style="background-color:orange">Decrease
+		</button>
+	</td>
+</tr>
+
+@code 
+{
+	[Parameter]
+	public ShoppingItem ShoppingItem { get; set; }
+
+	[Parameter]
+	public EventCallback<MouseEventArgs> OnQuantityChanged { get; set; }
+
+	private async Task DecreaseItem()
+	{
+		if(ShoppingItem.Quantity > 0) ShoppingItem.Quantity--;
+		await OnQuantityChanged.InvokeAsync();
+	}
+
+	private async Task IncreaseItem()
+	{
+		if(ShoppingItem.Quantity > 0) ShoppingItem.Quantity++;
+		await OnQuantityChanged.InvokeAsync();
+	}
+}
