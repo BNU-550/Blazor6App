@@ -5,7 +5,8 @@ This code is based on the Blazor section of a Udemy Course
 ](https://www.udemy.com/course/aspnet-6-course/learn/lecture/31491684?start=0#overview)
 
 This code includes examples of 
-1. Adding Shopping List Items using HTML
-2. Adding Shopping List Items using Blazor Forms and validation
-3. File upload using a FileUpload Service and Progress bars
-4. 
+1. Blazor Server Project 
+2. Adding Shopping List Items using HTML
+3. Adding Shopping List Items using Blazor Forms and validation
+4. File upload using a FileUpload Service and Progress bars
+5. 
