@@ -13,5 +13,7 @@ namespace Blazor6App.Models
         public string Address { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
+
+        public IEnumerable<PhoneNo> PhoneNos { get; set; }
     }
 }
