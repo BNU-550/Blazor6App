@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Blazor6App.Models;
 
 namespace Blazor6App.Data
 {
@@ -9,5 +10,7 @@ namespace Blazor6App.Data
             : base(options)
         {
         }
+
+        public DbSet<Customer> Customers { get; set; }
     }
 }

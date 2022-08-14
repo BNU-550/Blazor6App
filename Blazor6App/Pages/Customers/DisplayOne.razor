@@ -1,0 +1,26 @@
+﻿@page "/Customers/DisplayOne"
+@using Blazor6App.Models
+
+<h3>Display Customer</h3>
+<ul class="list-group m-4">
+    <li><strong>Customer No:</strong> @customer.Id</li>
+    <li><strong>Name:</strong> @customer.Name</li>
+    <li><strong>Address:</strong> @customer.Address</li>
+    <li><strong>Status:</strong> @(customer.IsActive?"Active":"Inactive")</li>
+</ul>
+<br/>
+<input type="checkbox" @bind-value="customer.IsActive" 
+    checked="@(customer.IsActive?"checked":null)" />
+<br/>
+<input type="text" @bind-value="customer.Name" @bind-value:event="oninput" />
+
+@code 
+{
+    private Customer customer = new Customer()
+    {
+        Id = 1,
+        Name = "Derek",
+        Address = "Abbots Langley"
+    };
+
+}
