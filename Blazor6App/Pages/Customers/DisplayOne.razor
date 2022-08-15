@@ -1,21 +1,61 @@
 ﻿@page "/Customers/DisplayOne"
 @using Blazor6App.Models
 
-<h3>Display Customer</h3>
-<ul class="list-group m-4">
-    <li><strong>Customer No:</strong> @customer.Id</li>
-    <li><strong>Name:</strong> @customer.Name</li>
-    <li><strong>Address:</strong> @customer.Address</li>
-    <li><strong>Status:</strong> @(customer.IsActive?"Active":"Inactive")</li>
-</ul>
-<br/>
-<input type="checkbox" @bind-value="customer.IsActive" 
-    checked="@(customer.IsActive?"checked":null)" />
-<br/>
-<input type="text" @bind-value="customer.Name" @bind-value:event="oninput" />
+<h3 class="text-primary">Display Customer Properties</h3>
+
+<div class="bg-info">
+    <ul class="list-group m-4">
+        <li class="list-group-item">
+            <strong>Customer No:</strong> @customer.Id
+        </li>
+        <li class="list-group-item">
+            <strong>Name:</strong> @customer.Name
+        </li>
+        <li class="list-group-item">
+            <strong>Address:</strong> @customer.Address
+        </li>
+        <li class="list-group-item">
+            <strong>Status:</strong> @(customer.IsActive?"Active":"Inactive")
+        </li>
+        <li class="list-group-item">
+            <strong>Phone Number :</strong> @selectedNumber 
+            @if(!String.IsNullOrWhiteSpace(selectedNumber))
+            {
+                <span> (@customer.PhoneNos.FirstOrDefault(n=>n.Number == selectedNumber).Type)</span>
+            }
+        </li>
+    </ul>
+</div>
+
+<h3 class="text-primary">Change Customer Properties</h3>
+
+<section class="border bg-success">
+    <div class="m-3">
+        Is Active <input type="checkbox" @bind-value="customer.IsActive" 
+        checked="@(customer.IsActive?"checked":null)" />
+    </div>
+
+    <div class="m-3">
+        <label>Customer Name: </label>
+        <input type="text" @bind-value="customer.Name" @bind-value:event="oninput" />
+    </div>
+    <div class="m-3">
+        <label>Selected Phone No: </label>
+        <select @bind="selectedNumber">
+            <option value="" selected>Choose a Number</option>
+            @foreach(PhoneNo number in customer.PhoneNos)
+            {
+                <option value="@number.Number">@number.Type : @number.Number</option>
+            }
+        </select>
+    </div>
+</section>
+
 
 @code 
 {
+    private string selectedNumber = string.Empty;
+
     private Customer customer = new Customer()
         {
             Id = 1,
