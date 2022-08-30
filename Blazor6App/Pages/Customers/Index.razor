@@ -1,0 +1,93 @@
+﻿@page "/Customers/Index"
+
+<h3>Customer List</h3>
+
+<p>
+    <a asp-page="Customers/Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Is Active
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Phone Nos
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in customers) 
+        {
+            <tr>
+                <td>
+                    @customer.IsActive
+                </td>
+                <td>
+                    <input type="text" @bind-value="customer.Name" />
+                </td>
+                <td>
+                    <input type="text" @bind-value="customer.Address" />
+                </td>
+                <td>
+                    @foreach(var phone in customer.PhoneNos)
+                    {
+                        <span>(@phone.Type) @phone.Number</span><br/>
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Customers/Edit" asp-route-id="@customer.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@customer.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@customer.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h3>Customers</h3>
+<div>
+    @foreach(var customer in customers)
+    {
+        <p>Customer @customer.Id @customer.Name @customer.Address</p>
+    }
+</div>
+@code
+{
+    private List<Customer> customers = new List<Customer>()
+    {
+        new Customer
+        {
+            Id = 1,
+            Name = "Derek",
+            Address = "Abbots Langley",
+            PhoneNos = new List<PhoneNo>()
+            {
+                new PhoneNo{Id = 1, Type = PhoneNumberTypes.home, Number = "01283 234 1234"},
+                new PhoneNo{Id = 2, Type = PhoneNumberTypes.mobile, Number = "07981 234 234"},
+                new PhoneNo{Id = 3, Type = PhoneNumberTypes.office, Number = "01 334 1234"},
+            }
+        },
+        new Customer
+        {
+            Id = 2,
+            Name = "Gita",
+            Address = "Ongar",
+            PhoneNos = new List<PhoneNo>()
+            {
+                new PhoneNo{Id = 1, Type = PhoneNumberTypes.home, Number = "01283 234 1234"},
+                new PhoneNo{Id = 2, Type = PhoneNumberTypes.mobile, Number = "07981 234 234"},
+                new PhoneNo{Id = 3, Type = PhoneNumberTypes.office, Number = "01 334 1234"},
+            }
+        }
+
+    };    
+}

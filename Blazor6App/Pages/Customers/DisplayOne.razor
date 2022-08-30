@@ -57,16 +57,16 @@
     private string selectedNumber = string.Empty;
 
     private Customer customer = new Customer()
+    {
+        Id = 1,
+        Name = "Derek",
+        Address = "Abbots Langley",
+        PhoneNos = new List<PhoneNo>()
         {
-            Id = 1,
-            Name = "Derek",
-            Address = "Abbots Langley",
-            PhoneNos = new List<PhoneNo>()
-            {
-                new PhoneNo{Id = 1, Type = PhoneNumberTypes.home, Number = "01283 234 1234"},
-                new PhoneNo{Id = 2, Type = PhoneNumberTypes.mobile, Number = "07981 234 234"},
-                new PhoneNo{Id = 3, Type = PhoneNumberTypes.office, Number = "01 334 1234"},
-            }
+            new PhoneNo{Id = 1, Type = PhoneNumberTypes.home, Number = "01283 234 1234"},
+            new PhoneNo{Id = 2, Type = PhoneNumberTypes.mobile, Number = "07981 234 234"},
+            new PhoneNo{Id = 3, Type = PhoneNumberTypes.office, Number = "01 334 1234"},
+        }
     };
 
 }
